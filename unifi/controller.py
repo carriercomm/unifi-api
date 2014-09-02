@@ -11,6 +11,7 @@ import json
 import logging
 import urllib
 import urllib2
+import time
 
 log = logging.getLogger(__name__)
 
@@ -103,6 +104,30 @@ class Controller:
         """Return a list of all Alerts."""
 
         return self._read(self.api_url + 'list/alarm')
+        
+    def get_alerts_unarchived(self):
+        """Return a list of Alerts unarchived."""
+
+        js = json.dumps({'_sort': '-time', 'archived':False})
+        params = urllib.urlencode({'json': js})
+        return self._read(self.api_url + 'list/alarm', params)
+
+    def get_statistics_last_24h(self):
+        """Returns statistical data of the last 24h"""
+
+        return self.get_statistics_24h(time.time())
+        
+    def get_statistics_24h(self, endtime):
+        """Return statistical data last 24h from time"""
+        
+        js = json.dumps({'attrs':["bytes","num_sta","time"], 'start':int(endtime-86400)*1000, 'end':int(endtime-3600)*1000})
+        params = urllib.urlencode({'json': js})
+        return self._read(self.api_url + 'stat/report/hourly.system', params)
+        
+    def get_events(self):
+        """Return a list of all Events."""
+
+        return self._read(self.api_url + 'stat/event')
 
     def get_aps(self):
         """Return a list of all AP:s, with significant information about each."""

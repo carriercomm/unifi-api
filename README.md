@@ -48,6 +48,14 @@ jb@unifi:~ % unifi-low-snr-reconnect -c localhost -u admin -p p4ssw0rd -v v3 -s 
 
 For production use, launching the script into the background is recommended...
 
+### unifi-save-statistics
+
+Get a csv file with statistics
+
+```
+unifi-save-statistics -c localhost -u admin -p p4ssw0rd -v v3 -s default -f filename.csv
+```
+
 API Example
 -----------
 
@@ -129,7 +137,15 @@ connection is of bad quality to force a rescan.
 ### `get_alerts(self)`
 
 Return a list of Alerts.
+
+### `get_alerts_unarchived(self)`
+
+Return a list of unarchived Alerts.
  
+### `get_events(self)`
+
+Return a list of Events.
+
 ### `get_aps(self)`
 
 Return a list of all AP:s, with significant information about each.
@@ -138,6 +154,16 @@ Return a list of all AP:s, with significant information about each.
 
 Return a list of all active clients, with significant information about each.
 
+### `get_statistics_last_24h(self)`
+
+Return statistical data of the last 24h
+
+### `get_statistics_24h(self, endtime)`
+
+Return statistical data last 24h from endtime
+
+ - `endtime` -- the last time of statistics.
+        
 ### `get_users(self)`
 
 Return a list of all known clients, with significant information about each.
